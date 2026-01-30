@@ -34,13 +34,32 @@ public class CategoryController {
     }
 
     @RequestMapping("/category/create")
-    public String create(Category item){
+    public String create(Category item, Model model){
+        if(item.getId() == null || item.getId().isEmpty() || item.getName().isEmpty()){
+            model.addAttribute("message", "Vui lòng nhập ID và Tên");
+            return "forward:/category/index";
+        }
+        if(dao.existsById(item.getId())){
+            model.addAttribute("message", "ID tồn tại");
+            return "forward:/category/index";
+        }
         dao.save(item);
         return "redirect:/category/index";
     }
 
     @RequestMapping("/category/update")
-    public String update(Category item){
+    public String update(Category item, Model model){
+        if (item.getId().isBlank() || item.getName().isBlank()) {
+            model.addAttribute("message", "Vui lòng nhập đầy đủ Mã và Tên để cập nhật!");
+            model.addAttribute("items", dao.findAll());
+            return "category/index";
+        }
+        if (!dao.existsById(item.getId())) {
+            model.addAttribute("message", "Mã loại hàng này không tồn tại!");
+            model.addAttribute("items", dao.findAll());
+            return "category/index";
+        }
+
         dao.save(item);
         return "redirect:/category/edit/" + item.getId();
     }

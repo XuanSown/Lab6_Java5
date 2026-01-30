@@ -11,9 +11,14 @@
             <h3>CATEGORY MANAGEMENT</h3>
         </div>
         <div class="card-body">
+            <div th:if="${message != null}" class="alert alert-primary text-center" role="alert">
+                <i th:text="${message}"></i>
+            </div>
             <form action="/category/index" method="post" th:object="${item}" class="mb-4">
                 <div class="mb-3">
-                    <input th:field="*{id}" class="form-control" placeholder="Category Id?">
+                    <input th:field="*{id}" class="form-control"
+                           th:readonly="${item.id != null and item.id != ''}"
+                           placeholder="Category Id?">
                 </div>
                 <div class="mb-3">
                     <input th:field="*{name}" class="form-control" placeholder="Category Name?">
@@ -21,7 +26,9 @@
                 <div>
                     <button formaction="/category/create" class="btn btn-outline-success">Create</button>
                     <button formaction="/category/update" class="btn btn-outline-success">Update</button>
-                    <a th:href="@{|/category/delete/*{id}|}" class="btn btn-danger">Delete</a>
+                    <a th:href="@{|/category/delete/*{id}|}"
+                       th:if="${item.id != null and item.id != ''}"
+                       class="btn btn-danger">Delete</a>
                     <a href="/category/index" class="btn btn-secondary">Reset</a>
                 </div>
             </form>
@@ -39,7 +46,7 @@
                      <td th:text="${item.id}"></td>
                      <td th:text="${item.name}"></td>
                      <td>
-                         <a th:href="@{|/category/edit/${item.id}|}" class="btn btn-sm btn-info">Edit</a>
+                         <a th:href="@{|/category/edit/${item.id}|}" class="btn btn-sm btn-outline-info">Edit</a>
                      </td>
                  </tr>
                 </tbody>
