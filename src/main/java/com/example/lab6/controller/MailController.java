@@ -25,7 +25,7 @@ public class MailController {
                        @RequestParam("body") String body){
         try {
             mailService.send(to, subject, body);
-            model.addAttribute("message", "chờ vài giây");
+            model.addAttribute("message", "thành công!");
         } catch (Exception e) {
             model.addAttribute("message","Lỗi: " + e.getMessage());
         }
