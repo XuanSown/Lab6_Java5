@@ -3,28 +3,11 @@ GO
 USE db_Lab6
 GO
 
--- Drop tables if they exist to allow clean re-runs
-IF OBJECT_ID('OrderDetails', 'U') IS NOT NULL DROP TABLE OrderDetails;
-IF OBJECT_ID('Orders', 'U') IS NOT NULL DROP TABLE Orders;
-IF OBJECT_ID('Products', 'U') IS NOT NULL DROP TABLE Products;
-IF OBJECT_ID('Accounts', 'U') IS NOT NULL DROP TABLE Accounts;
-IF OBJECT_ID('Categories', 'U') IS NOT NULL DROP TABLE Categories;
-GO
-
 SELECT * FROM Categories
 SELECT * FROM Products
 SELECT * FROM Orders
 SELECT * FROM OrderDetails
 SELECT * FROM Accounts
-
-DBCC CHECKIDENT ('Products', RESEED, 0);
-DBCC CHECKIDENT ('Orders', RESEED, 0);
-DBCC CHECKIDENT ('OrderDetails', RESEED, 0);
-delete from Products
-delete from Orders
-delete from OrderDetails
-delete from Accounts
-delete from Categories
 
 CREATE TABLE Categories (
     Id char(4) PRIMARY KEY,
@@ -114,3 +97,8 @@ INSERT INTO Orderdetails (Price, Quantity, Orderid, Productid) VALUES
 (50.0, 10, 3, 1),
 (300.0, 2, 3, 4),
 (120.0, 1, 3, 5);
+
+INSERT INTO OrderDetails (OrderId, ProductId, Price, Quantity) VALUES
+(1, 1, 100, 2),
+(1, 2, 500, 1),
+(2, 4, 1000, 3);
