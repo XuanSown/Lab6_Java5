@@ -39,7 +39,7 @@ public class AccountController {
                 session.removeAttribute("securityUri");
                 return "redirect:" + securityUri.toString();
             }
-            return "redirect:/"; //trang chu
+            return "redirect:/product/search-and-page"; //trang chu
         } catch (Exception e) {
             model.addAttribute("message", "sai username hoặc password!");
         }
