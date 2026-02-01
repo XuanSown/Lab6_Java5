@@ -17,11 +17,6 @@ public class ReportController {
     public String inventory(Model model){
         List<Report> items = dao.getInventory();
         System.out.println("Tổng số: " + items.size());
-        if (!items.isEmpty()) {
-            System.out.println("Dòng đầu tiên: " + items.get(0).getGroup());
-        } else {
-            System.out.println("DANH SÁCH RỖNG - CHƯA CÓ DỮ LIỆU!");
-        }
         model.addAttribute("items", items);
         return "report/inventory";
     }

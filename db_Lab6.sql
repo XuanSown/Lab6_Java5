@@ -3,11 +3,21 @@ GO
 USE db_Lab6
 GO
 
-SELECT * FROM Categories
-SELECT * FROM Products
-SELECT * FROM Orders
-SELECT * FROM OrderDetails
-SELECT * FROM Accounts
+DELETE FROM OrderDetails;
+DBCC CHECKIDENT ('OrderDetails', RESEED, 0);
+DELETE FROM Products;
+DBCC CHECKIDENT ('Products', RESEED, 0);
+
+SELECT *
+FROM Categories
+SELECT *
+FROM Products
+SELECT *
+FROM Orders
+SELECT *
+FROM OrderDetails
+SELECT *
+FROM Accounts
 
 CREATE TABLE Categories (
     Id char(4) PRIMARY KEY,
@@ -88,17 +98,7 @@ INSERT INTO Orders (Address, CreateDate, Username) VALUES
 (N'456 Đường Nguyễn Huệ, Hà Nội', '2025-01-16', 'user2'),
 (N'789 Đường 3/2, Cần Thơ', '2025-01-17', 'user1');
 
--- 5. Insert OrderDetails
--- These OrderId values (1, 2, 3) must exist in the Orders table
-INSERT INTO Orderdetails (Price, Quantity, Orderid, Productid) VALUES
-(100.0, 2, 1, 1),
-(200.0, 1, 1, 2),
-(150.0, 5, 2, 3),
-(50.0, 10, 3, 1),
-(300.0, 2, 3, 4),
-(120.0, 1, 3, 5);
-
 INSERT INTO OrderDetails (OrderId, ProductId, Price, Quantity) VALUES
-(1, 1, 100, 2),
-(1, 2, 500, 1),
-(2, 4, 1000, 3);
+(1, 1, 100, 5),
+(1, 2, 500, 2),
+(2, 3, 300, 1);

@@ -17,7 +17,7 @@
     <tbody>
     <tr th:each="item : ${items}">
         <td th:text="${item.group.name}"></td>
-        <td th:text="${#numbers.formatCurrency(item.sum)}"></td>
+        <td th:text="${#numbers.formatDecimal(item.sum, 0, 'COMMA', 0, 'POINT')}"></td>
         <td th:text="${item.count}"></td>
     </tr>
     </tbody>
