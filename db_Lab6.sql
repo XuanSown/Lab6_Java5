@@ -1,11 +1,30 @@
 CREATE DATABASE db_Lab6
+GO
 USE db_Lab6
+GO
+
+-- Drop tables if they exist to allow clean re-runs
+IF OBJECT_ID('OrderDetails', 'U') IS NOT NULL DROP TABLE OrderDetails;
+IF OBJECT_ID('Orders', 'U') IS NOT NULL DROP TABLE Orders;
+IF OBJECT_ID('Products', 'U') IS NOT NULL DROP TABLE Products;
+IF OBJECT_ID('Accounts', 'U') IS NOT NULL DROP TABLE Accounts;
+IF OBJECT_ID('Categories', 'U') IS NOT NULL DROP TABLE Categories;
+GO
 
 SELECT * FROM Categories
 SELECT * FROM Products
 SELECT * FROM Orders
 SELECT * FROM OrderDetails
 SELECT * FROM Accounts
+
+DBCC CHECKIDENT ('Products', RESEED, 0);
+DBCC CHECKIDENT ('Orders', RESEED, 0);
+DBCC CHECKIDENT ('OrderDetails', RESEED, 0);
+delete from Products
+delete from Orders
+delete from OrderDetails
+delete from Accounts
+delete from Categories
 
 CREATE TABLE Categories (
     Id char(4) PRIMARY KEY,
@@ -47,6 +66,7 @@ CREATE TABLE OrderDetails (
     Quantity int
 )
 
+-- 1. Insert Categories (No dependencies)
 INSERT INTO Categories (Id, Name) VALUES
 ('1000', N'Đồng hồ đeo tay'),
 ('1001', N'Máy tính xách tay'),
@@ -57,6 +77,15 @@ INSERT INTO Categories (Id, Name) VALUES
 ('1006', N'Nón thời trang'),
 ('1007', N'Túi xách du lịch');
 
+-- 2. Insert Accounts (No dependencies)
+INSERT INTO Accounts (Username, Password, Fullname, Email, Photo, Activated, Admin) VALUES
+('admin', '123', N'Nguyễn Văn Quản Trị', 'admin@gmail.com', 'user.png', 1, 1),
+('user1', '123', N'Trần Thị Người Dùng', 'user1@gmail.com', 'user.png', 1, 0),
+('user2', '123', N'Lê Văn Khách', 'user2@gmail.com', 'user.png', 1, 0),
+('teolv', '123', N'Lý Văn Tèo', 'teolv@gmail.com', 'teo.jpg', 0, 0),
+('pheonv', '123', N'Nguyễn Văn Phèo', 'pheonv@fpt.edu.vn', 'pheo.jpg', 1, 1);
+
+-- 3. Insert Products
 INSERT INTO Products (Name, Price, CreateDate, Available, CategoryId, Image) VALUES
 (N'Aniseed Syrup', 190.0, '2025-03-29', 1, '1000', 'p1.jpg'),
 (N'Cate de Blaye', 263.5, '2025-07-12', 1, '1000', 'p2.jpg'),
@@ -68,3 +97,20 @@ INSERT INTO Products (Name, Price, CreateDate, Available, CategoryId, Image) VAL
 (N'Tunnbr Korea', 9.0, '2025-08-31', 1, '1003', 'p8.jpg'),
 (N'Guaranaj Fantajstica', 4.5, '2025-03-13', 1, '1004', 'p9.jpg'),
 (N'NuNuCa Nuaa-Nougat-Creme', 14.0, '2025-07-20', 1, '1004', 'p10.jpg');
+
+-- 4. Insert Orders
+-- Since ID is Identity, it will start at 1 if the table was just created/truncated
+INSERT INTO Orders (Address, CreateDate, Username) VALUES
+(N'123 Đường Lê Lợi, TP.HCM', '2025-01-15', 'user1'),
+(N'456 Đường Nguyễn Huệ, Hà Nội', '2025-01-16', 'user2'),
+(N'789 Đường 3/2, Cần Thơ', '2025-01-17', 'user1');
+
+-- 5. Insert OrderDetails
+-- These OrderId values (1, 2, 3) must exist in the Orders table
+INSERT INTO Orderdetails (Price, Quantity, Orderid, Productid) VALUES
+(100.0, 2, 1, 1),
+(200.0, 1, 1, 2),
+(150.0, 5, 2, 3),
+(50.0, 10, 3, 1),
+(300.0, 2, 3, 4),
+(120.0, 1, 3, 5);

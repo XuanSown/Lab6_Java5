@@ -12,7 +12,7 @@ public class OrderDetail implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     Double price;
-    Integer quạntity;
+    Integer quantity;
 
     @ManyToOne
     @JoinColumn(name = "ProductId")

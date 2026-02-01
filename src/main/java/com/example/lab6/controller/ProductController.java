@@ -62,10 +62,11 @@ public class ProductController {
                                 @RequestParam("keywords") Optional<String> kw,
                                 @RequestParam("p") Optional<Integer> p) {
         String kwords = kw.orElse((String) session.getAttribute("keywords"));
+        if(kwords == null) kwords = "";
         session.setAttribute("keywords", kwords);
         Pageable pageable = PageRequest.of(p.orElse(0), 3);
         Page<Product> page =dao.findAllByNameLike("%"+kwords+"%", pageable);
         model.addAttribute("page", page);
-        return "product/page";
+        return "product/search-and-page";
     }
 }
