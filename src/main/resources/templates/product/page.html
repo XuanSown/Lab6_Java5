@@ -7,6 +7,17 @@
 </head>
 <body class="container mt-4">
 <h3 class="text-center">PAGE</h3>
+<form action="/product/page" method="post" class="row g-3 mb-4">
+    <div class="col-auto">
+        <input name="min" type="number" class="form-control" placeholder="Min Price">
+    </div>
+    <div class="col-auto">
+        <input name="max" type="number" class="form-control" placeholder="Max Price">
+    </div>
+    <div class="col-auto">
+        <button class="btn btn-primary">Search</button>
+    </div>
+</form>
 <table class="table table-bordered">
     <thead>
     <tr>
@@ -16,14 +27,23 @@
         <th>Date</th>
     </tr>
     </thead>
+<!--    <tbody>-->
+<!--    <tr>-->
+<!--    <tr th:each="item : ${page.content}">-->
+<!--        <td th:text="${item.id}"></td>-->
+<!--        <td th:text="${item.name}"></td>-->
+<!--        <td th:text="${item.price}"></td>-->
+<!--        <td th:text="${item.createDate}"></td>-->
+<!--    </tr>-->
+<!--    </tr>-->
+<!--    </tbody>-->
     <tbody>
     <tr>
-    <tr th:each="item : ${page.content}">
+    <tr th:each="item : ${items}">
         <td th:text="${item.id}"></td>
         <td th:text="${item.name}"></td>
         <td th:text="${item.price}"></td>
         <td th:text="${item.createDate}"></td>
-    </tr>
     </tr>
     </tbody>
 </table>
