@@ -25,7 +25,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
         // 2. Auth Interceptor: Chỉ bảo vệ các đường dẫn cần đăng nhập
         registry.addInterceptor(authInterceptor)
-                .addPathPatterns("category/**")
+                .addPathPatterns("account/change-password", "account/edit-profile")
                 .excludePathPatterns("/assets/**", "/account/login");
 
         // 3. Log Interceptor: Ghi log mọi thứ (hoặc tùy chọn)

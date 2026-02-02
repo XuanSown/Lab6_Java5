@@ -50,6 +50,17 @@ public class AccountController {
     public String logout(){
         session.removeAttribute("user");
         session.removeAttribute("securityUri");
+        session.invalidate();
         return "redirect:/account/login";
+    }
+
+    @GetMapping("/account/edit-profile")
+    public String editProfile(){
+        return "account/edit-profile";
+    }
+
+    @GetMapping("/account/change-password")
+    public String changePassword(){
+        return "account/change-password";
     }
 }
