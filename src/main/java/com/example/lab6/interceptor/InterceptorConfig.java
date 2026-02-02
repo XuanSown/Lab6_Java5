@@ -21,12 +21,12 @@ public class InterceptorConfig implements WebMvcConfigurer {
         // 1. Global Interceptor: Chạy cho tất cả các request để hiện Menu
         registry.addInterceptor(globalInterceptor)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/static/**", "/assets/**");
+                .excludePathPatterns("/assets/**");
 
         // 2. Auth Interceptor: Chỉ bảo vệ các đường dẫn cần đăng nhập
         registry.addInterceptor(authInterceptor)
-                .addPathPatterns("/order/**", "/admin/**", "/account/change-password", "/account/profile")
-                .excludePathPatterns("/assets/**", "/admin/home/index");
+                .addPathPatterns("category/**")
+                .excludePathPatterns("/assets/**", "/account/login");
 
         // 3. Log Interceptor: Ghi log mọi thứ (hoặc tùy chọn)
         registry.addInterceptor(logInterceptor)
